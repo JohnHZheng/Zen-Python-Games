@@ -2,7 +2,7 @@
 import os
 import pygame
 
-class Ship:
+class Ship:   
     """ A class to manage shipo"""
     def __init__(self, ai_game) -> None:
         self.screen = ai_game.screen
