@@ -1,4 +1,5 @@
 from bullet import Bullet
+from alien import Alien
 from settings import Settings
 from ship import Ship
 import pygame
@@ -21,6 +22,8 @@ class AlienInvasion:
 
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
+        self.aliens = pygame.sprite.Group()
+        self._create_fleet()
         # Set the background color
         #self.bg_color = (230, 230, 230)
 
@@ -84,7 +87,29 @@ class AlienInvasion:
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
         self.ship.blitme()
-        pygame.display.flip()       
+        self.aliens.draw(self.screen)
+
+        pygame.display.flip()      
+
+    def _create_fleet(self):
+        """Create the fleet of aliens"""
+        # Make an aline
+        alien = Alien(self)
+        self.aliens.add(alien)
+        align_width = alien.rect.width
+
+        current_x = align_width
+        while current_x < (self.settings.screen_width - 2 * align_width):
+            self._create_alien(current_x)
+            current_x += 2*align_width
+
+    def _create_alien(self, x_position):
+        """Create the alien and place it in the row"""
+        # Make an aline
+        new_alien = Alien(self)
+        new_alien.x = x_position
+        new_alien.rect.x = x_position
+        self.aliens.add(new_alien)
 
 if __name__ == '__main__':
     # Make a game instance, and run the game
